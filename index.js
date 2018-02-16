@@ -1,11 +1,12 @@
 var express = require("express"),
-    app = express();
+    app = express(),
+    port = process.env.PORT || 3000;
+var todoRoutes = require("./routes/todos.js");
+
+
     
-app.get("/", function(req, res){
-   res.send("Hi there from Express"); 
-});
+app.get("/api/todos", todoRoutes);
     
-app.listen(process.env.PORT, function(){
-    console.log("App is Running on PORT " + process.env.PORT);
+app.listen(port, function(){
+    console.log("App is Running on PORT " + port);
 });
- 
