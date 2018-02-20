@@ -4,11 +4,14 @@ var express = require("express"),
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/views"));
+
     
 var todoRoutes = require("./routes/todos.js");
 
 app.get("/", function(req, res){
-   res.send("Hello from the Root Routes"); 
+   res.sendFile("index.html"); 
 });
 
 app.use("/api/todos", todoRoutes);
