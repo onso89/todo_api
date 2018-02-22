@@ -10,11 +10,12 @@ $(document).ready(function(){
      }
    });
    
-   $('.list').on('click', function(){
+   $('.list').on('click', 'li', function(){
        updateTodo($(this));
    });
    
-   $('.list').on('click', 'span', function(){
+   $('.list').on('click', 'span', function(e){
+       e.stopPropagation();
        deleteTodo($(this).parent());
    });
    
@@ -67,7 +68,23 @@ function deleteTodo(todo) {
     });
 }
 
-
+function updateTodo(todo) {
+    var updatedTodoUrl = "/api/todos/" + todo.data('id');
+    var isDone = !todo.data('completed');
+    var updateData = {completed: isDone};
+    $.ajax({
+        method: 'PUT',
+        url: updatedTodoUrl,
+        data: updateData,
+    })
+    .then(function(updatedTodo){
+      todo.toggleClass('done');
+      todo.data('completed', isDone);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
 
 
 
